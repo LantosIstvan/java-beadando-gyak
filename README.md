@@ -11,14 +11,14 @@
 ## Kliens oldali JS build legenerálása
 
 ```txt
-Maven -> Lifecycle -> Clean
-Maven -> Lifecycle -> Package
+Maven -> Lifecycle -> clean
+Maven -> Lifecycle -> compile
 ```
 
-vagy parancssorból futtatva:
+## Végleges WAR állomány elkészítése
 
-```sh
-mvn clean package
+```txt
+Maven -> Lifecycle -> package
 ```
 
 ## Adatbázis információk
