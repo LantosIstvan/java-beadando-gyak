@@ -1,9 +1,11 @@
 configs:
   db_root_password:
+    content: "secret"
+  db_password:
     content: "abc123"
   01_adatbazis_dev_sql:
     content: |
-      CREATE DATABASE IF NOT EXISTS `db136`
+      ALTER DATABASE `db111`
       CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
   config_user_inc_php:
     content: |
@@ -38,10 +40,15 @@ services:
       # - ./sql:/docker-entrypoint-initdb.d:ro
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+      - MYSQL_USER=studb111
+      - MYSQL_DATABASE=db111
       - TZ=Europe/Budapest
     configs:
       - source: db_root_password
         target: /run/secrets/db_root_password
+      - source: db_password
+        target: /run/secrets/db_password
       - source: 01_adatbazis_dev_sql
         target: /docker-entrypoint-initdb.d/01_adatbazis_dev.sql
     ports:
@@ -57,16 +64,16 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=database
-      - PMA_PASSWORD_FILE=/run/secrets/db_root_password
-      - PMA_USER=root
+      - PMA_PASSWORD_FILE=/run/secrets/db_password
+      - PMA_USER=studb111
       - TZ=Europe/Budapest
     volumes:
       - phpmyadmin:/sessions
     configs:
       - source: config_user_inc_php
         target: /etc/phpmyadmin/config.user.inc.php
-      - source: db_root_password
-        target: /run/secrets/db_root_password
+      - source: db_password
+        target: /run/secrets/db_password
       - source: zz_php_ini
         target: /usr/local/etc/php/conf.d/zz-php.ini
     ports:
