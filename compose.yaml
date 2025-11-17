@@ -1,0 +1,77 @@
+configs:
+  db_root_password:
+    content: "abc123"
+  01_adatbazis_dev_sql:
+    content: |
+      CREATE DATABASE IF NOT EXISTS `db136`
+      CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  config_user_inc_php:
+    content: |
+      <?php
+      $$cfg['Lang'] = 'en';
+      $$cfg['LoginCookieValidity'] = 86400;
+      $$cfg['ShowPhpInfo'] = true;
+  zz_php_ini:
+    content: |
+      post_max_size = 256M
+      session.gc_maxlifetime = 86400
+      upload_max_filesize = 256M
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
+
+volumes:
+  db_data:
+  phpmyadmin:
+
+services:
+
+  ### database ###################################################################
+  # https://hub.docker.com/_/mariadb
+  database:
+    image: mariadb:12.0.2-noble
+    volumes:
+      - db_data:/var/lib/mysql
+      # - ./sql:/docker-entrypoint-initdb.d:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - TZ=Europe/Budapest
+    configs:
+      - source: db_root_password
+        target: /run/secrets/db_root_password
+      - source: 01_adatbazis_dev_sql
+        target: /docker-entrypoint-initdb.d/01_adatbazis_dev.sql
+    ports:
+      - 3306:3306
+    networks:
+      - backend
+      - frontend
+
+  ### PhpMyAdmin #################################################################
+  # https://hub.docker.com/_/phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin:5.2.3-apache
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=database
+      - PMA_PASSWORD_FILE=/run/secrets/db_root_password
+      - PMA_USER=root
+      - TZ=Europe/Budapest
+    volumes:
+      - phpmyadmin:/sessions
+    configs:
+      - source: config_user_inc_php
+        target: /etc/phpmyadmin/config.user.inc.php
+      - source: db_root_password
+        target: /run/secrets/db_root_password
+      - source: zz_php_ini
+        target: /usr/local/etc/php/conf.d/zz-php.ini
+    ports:
+      - 8081:80
+    depends_on:
+      - database
+    networks:
+      - frontend
