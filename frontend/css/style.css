@@ -1,0 +1,20 @@
+@import 'theme.css';
+
+/* Custom styles by Lanti *****************************************************/
+
+.active {
+  font-weight: bolder;
+}
+
+/* nagyobb touch-célok mobilon */
+@media (max-width: 991.98px) {
+  #userMenuOffcanvas .offcanvas-header {
+    padding: .75rem 1rem;
+  }
+
+  #userMenuOffcanvas a,
+  #userMenuOffcanvas button.btn-link {
+    padding: .95rem 1.25rem;
+    font-weight: 500;
+  }
+}

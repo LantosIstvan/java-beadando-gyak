@@ -84,6 +84,72 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.15.4</version>
+                <configuration>
+                    <workingDirectory>frontend</workingDirectory>
+                    <nodeVersion>v25.2.1</nodeVersion>
+                    <npmVersion>11.6.2</npmVersion>
+                </configuration>
+                <executions>
+                    <!-- Letölti a Node.js-t és az NPM-et -->
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                    </execution>
+                    <!-- Futtatja az `npm install`-t -->
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                        <phase>generate-resources</phase>
+                    </execution>
+                    <!-- Futtatja az `npm run build`-et -->
+                    <execution>
+                        <id>npm run build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                        <phase>generate-resources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- frontend által generált fájlok törlése -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/src/main/resources/static/assets</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>${project.basedir}/frontend/node_modules</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>${project.basedir}/frontend</directory>
+                            <includes>
+                                <include>package-lock.json</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

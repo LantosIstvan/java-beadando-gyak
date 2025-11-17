@@ -10,11 +10,15 @@
 
 ## Kliens oldali JS build legenerálása
 
+```txt
+Maven -> Lifecycle -> Clean
+Maven -> Lifecycle -> Package
+```
+
+vagy parancssorból futtatva:
+
 ```sh
-# Node.js csomagfüggőségek telepítése
-npm install
-# Futtatás
-npm run build:client
+mvn clean package
 ```
 
 ## Adatbázis információk
@@ -33,7 +37,7 @@ Adatbázis menedzseléshez PHPMyAdmin mellett javasolt még a [DBeaver](https://
 
 ## Git workflow
 
-Mivel Gitlab-al ellentétben Github-on a Collaborator-oknak is hozzáférése van a master branch-hez, ezért a fejlesztés javasolt saját névreszóló branch-ben, majd a kód átemelése master-be.
+Minden kollaborátor számára a fejlesztés javasolt saját névreszóló branch-ben, majd a kód átemelése master-be.
 
 ```sh
 git branch bencze

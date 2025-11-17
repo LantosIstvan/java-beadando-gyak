@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Project specific ###
+/frontend/node/
+/frontend/node_modules/
+/src/main/resources/static/assets/
