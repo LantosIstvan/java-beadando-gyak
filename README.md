@@ -33,6 +33,24 @@ Lokális fejlesztés során ezen adatbázis adatok használata szükséges, XAMP
 
 Ezen elérési adatok HOST kivételével tükrözik a majdani éles adatbázis adatait.
 
+Szükséges XAMPP PhpMyAdmin-ban root felhasználóként belépve létrehozni az adatbázist, felhasználót a szükséges megszorításokkal:
+
+```sql
+-- 1. Adatbázis létrehozása a megfelelő karakterkódolással
+CREATE DATABASE IF NOT EXISTS `db111` 
+CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- 2. Felhasználó létrehozása (studb111) a jelszóval (abc123)
+-- XAMPP esetén a host általában 'localhost'
+CREATE USER 'studb111'@'localhost' IDENTIFIED BY 'abc123';
+
+-- 3. Teljes jogosultság megadása a felhasználónak a db111 adatbázishoz
+GRANT ALL PRIVILEGES ON `db111`.* TO 'studb111'@'localhost';
+
+-- 4. Jogosultságok érvényesítése
+FLUSH PRIVILEGES;
+```
+
 Lokálisan XAMPP MariaDB helyett lehetséges még Docker használata is kényelmi szempontból, az ehhez szükséges Docker Compose projekt mellékelve van a gyökérkönyvtárban:
 
 ```sh
