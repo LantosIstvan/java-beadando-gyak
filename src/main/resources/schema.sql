@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id          INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    role        ENUM('ADMIN', 'USER') NOT NULL DEFAULT 'USER',
+    role        ENUM('ROLE_ADMIN', 'ROLE_USER') NOT NULL DEFAULT 'ROLE_USER',
     username    VARCHAR(255) UNIQUE NOT NULL,
     email       VARCHAR(255) UNIQUE NOT NULL,
     password    VARCHAR(255) NOT NULL,  -- SHA512 hash 128 karakter hosszú (Bcrypt/Argon2 támogatás miatt 255)
