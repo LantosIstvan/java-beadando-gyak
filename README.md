@@ -21,6 +21,8 @@ Maven -> Lifecycle -> compile
 Maven -> Lifecycle -> package
 ```
 
+Az alkalmazás a `9443`-as porton érhető el.
+
 ## Adatbázis információk
 
 Lokális fejlesztés során ezen adatbázis adatok használata szükséges, XAMPP-ot eszerint kell bekonfigurálni:
@@ -31,9 +33,9 @@ Lokális fejlesztés során ezen adatbázis adatok használata szükséges, XAMP
 - **USER:** studb111
 - **PASSWORD:** abc123
 
-Ezen elérési adatok HOST kivételével tükrözik a majdani éles adatbázis adatait.
+Ezen elérési adatok HOST és PASSWORD kivételével tükrözik a majdani éles adatbázis adatait.
 
-Szükséges XAMPP PhpMyAdmin-ban root felhasználóként belépve létrehozni az adatbázist, felhasználót a szükséges megszorításokkal:
+Szükséges XAMPP PhpMyAdmin-ban root felhasználóként belépve létrehozni az adatbázist, felhasználót a megszorításokkal:
 
 ```sql
 -- 1. Adatbázis létrehozása a megfelelő karakterkódolással

@@ -1,6 +1,6 @@
 INSERT INTO `users` (`id`, `role`, `username`, `email`, `password`) VALUES
-(1, 'ROLE_ADMIN', 'Admin', 'admin@example.com', SHA2('Admin', 512)),
-(2, 'ROLE_USER',  'User1', 'user1@example.com', SHA2('User1', 512));
+(1, 'ROLE_ADMIN', 'Admin', 'admin@example.com', '$2a$10$sSmId8Qcelr1x7LOKTCqbuAbtitODB32BWcz96T3TV4/0cDJRXpPO'),
+(2, 'ROLE_USER',  'User1', 'user1@example.com', '$2a$10$ofr5dOD2YsB9IbqGblZhr.R6EvAEveqcLg47JbEFOWhFcFt9qRRDq');
 
 INSERT INTO `messages` (`id`, `user_id`, `name`, `email`, `phone`, `subject`, `message`) VALUES
 (1, NULL, 'Vendég', 'guest@example.com', '+36761234567', 'Teszt üzenet', 'Ez egy seedelt tesztüzenet.'),

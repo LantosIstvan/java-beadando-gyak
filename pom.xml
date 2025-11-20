@@ -79,6 +79,7 @@
     </dependencies>
 
     <build>
+        <finalName>neptunkod-gy</finalName><!-- Feladatkiírás szerinti WAR állomány neve -->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
