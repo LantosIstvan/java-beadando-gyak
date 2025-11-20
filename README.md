@@ -23,7 +23,17 @@ Maven -> Lifecycle -> package
 
 ## Adatbázis információk
 
-Lokálisan XAMPP MariaDB helyett lehetséges Docker használata is kényelmi szempontból:
+Lokális fejlesztés során ezen adatbázis adatok használata szükséges, XAMPP-ot eszerint kell bekonfigurálni:
+
+- **HOST:** localhost
+- **PORT:** 3306
+- **DATABASE:** db111
+- **USER:** studb111
+- **PASSWORD:** abc123
+
+Ezen elérési adatok HOST kivételével tükrözik a majdani éles adatbázis adatait.
+
+Lokálisan XAMPP MariaDB helyett lehetséges még Docker használata is kényelmi szempontból, az ehhez szükséges Docker Compose projekt mellékelve van a gyökérkönyvtárban:
 
 ```sh
 # Docker Compose projekt futtatása

@@ -92,7 +92,7 @@
                 <configuration>
                     <workingDirectory>frontend</workingDirectory>
                     <nodeVersion>v25.2.1</nodeVersion>
-                    <npmVersion>11.6.2</npmVersion>
+                    <npmVersion>11.6.3</npmVersion>
                 </configuration>
                 <executions>
                     <!-- Letölti a Node.js-t és az NPM-et -->
