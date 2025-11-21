@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<th:block th:fragment="header">
+
+    <div th:replace="~{fragments/svg_icons :: svg_icons}"></div>
+
+    <header>
+        <div id="siteHeader" class="row align-items-center py-3 border-bottom g-0">
+            <!-- LOGÓ -->
+            <div class="col-6 col-lg-2 order-1 d-flex gap-3 justify-content-center">
+                <a th:href="@{/}" class="d-inline-flex align-items-center">
+                    <img th:src="@{/images/logo-express.svg}" th:alt="#{app.title}" class="img-fluid" style="height:41px;width:auto;">
+                </a>
+            </div>
+
+            <!-- USER AKCIÓK -->
+            <div class="col-6 col-lg-1 order-2 order-lg-3 d-flex justify-content-center">
+                <!-- Mobil Offcanvas Trigger -->
+                <a class="p-2 d-inline-flex align-items-center d-lg-none" data-bs-toggle="offcanvas" href="#userMenuOffcanvas" role="button" aria-controls="userMenuOffcanvas">
+                    <svg width="24" height="24" aria-hidden="true"><use xlink:href="#user"></use></svg>
+                    <span class="visually-hidden">Felhasználói menü</span>
+                </a>
+                <!-- Desktop Dropdown -->
+                <div class="dropdown d-none d-lg-block">
+                    <a class="p-2 d-inline-flex align-items-center dropdown-toggle me-lg-3" id="userDropdownDesktop" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                        <svg width="24" height="24" aria-hidden="true"><use xlink:href="#user"></use></svg>
+                        <span class="visually-hidden">Felhasználói menü</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdownDesktop">
+                        <!-- Bejelentkezve -->
+                        <div sec:authorize="isAuthenticated()">
+                            <li class="px-4 py-3 fw-bold text-dark">
+                                <span sec:authentication="name">Felhasználónév</span>
+                            </li>
+                            <li><hr class="dropdown-divider m-0"></li>
+                            <li>
+                                <form method="POST" th:action="@{/logout}">
+                                    <button type="submit" class="dropdown-item">Kijelentkezés</button>
+                                </form>
+                            </li>
+                        </div>
+                        <!-- Vendég -->
+                        <div sec:authorize="!isAuthenticated()">
+                            <li><a class="dropdown-item" th:href="@{/login}">Bejelentkezés</a></li>
+                            <li><a class="dropdown-item" th:href="@{/register}">Regisztráció</a></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Fő Menü -->
+            <div class="col-12 col-lg-9 order-3 order-lg-2">
+                <ul class="navbar-nav list-unstyled d-flex flex-row gap-3 gap-lg-5 justify-content-center flex-wrap align-items-center mb-0 fw-bold text-uppercase text-dark">
+                    <th:block th:replace="~{fragments/navigation :: nav_items}"></th:block>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mobil Offcanvas Tartalom -->
+        <div class="offcanvas offcanvas-top" tabindex="-1" id="userMenuOffcanvas" aria-labelledby="userMenuOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="userMenuOffcanvasLabel">Felhasználói menü</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Bezárás"></button>
+            </div>
+            <div class="offcanvas-body p-0">
+                <ul class="list-unstyled mb-0">
+                    <div sec:authorize="isAuthenticated()">
+                        <li class="px-4 py-3 fw-bold text-dark">
+                            <span sec:authentication="name">Felhasználónév</span>
+                        </li>
+                        <li><hr class="dropdown-divider m-0"></li>
+                        <li class="border-top">
+                            <form method="POST" th:action="@{/logout}" class="m-0">
+                                <button type="submit" class="d-block w-100 text-start px-4 py-3 btn btn-link text-decoration-none">Kijelentkezés</button>
+                            </form>
+                        </li>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <li><a class="d-block px-4 py-3 text-decoration-none text-dark" th:href="@{/login}">Bejelentkezés</a></li>
+                        <li><a class="d-block px-4 py-3 text-decoration-none text-dark" th:href="@{/register}">Regisztráció</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+</th:block>
+</body>
+</html>

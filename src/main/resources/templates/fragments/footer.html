@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="footer">
+
+    <footer class="pt-5">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-menu">
+                        <img th:src="@{/images/logo-express.svg}" width="240" height="70" th:alt="#{app.title}">
+                        <div class="social-links mt-3">
+                            <ul class="d-flex list-unstyled gap-2">
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#facebook"></use></svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#twitter"></use></svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#youtube"></use></svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#instagram"></use></svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#amazon"></use></svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h5 class="widget-title" th:text="#{app.title}"></h5>
+                        <ul class="menu-list list-unstyled">
+                            <th:block th:replace="~{fragments/navigation :: nav_items}"></th:block>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h5 class="widget-title">Gyors hivatkozások</h5>
+                        <ul class="menu-list list-unstyled">
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Ajánlatok</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Kedvezménykuponok</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Üzletek</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Rendelés követése</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Webshop</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Információ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h5 class="widget-title">Ügyfélszolgálat</h5>
+                        <ul class="menu-list list-unstyled">
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">GYIK</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Kapcsolat</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Adatvédelmi tájékoztató</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Visszaküldés és visszatérítés</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Sütiszabályzat</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Szállítási információk</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-bottom" class="pt-5">
+            <div class="container-lg">
+                <div class="row">
+                    <div class="col-md-6 copyright">
+                        <p>© <span th:text="${#dates.year(#dates.createNow())}"></span> <span th:text="#{app.title}"></span>. Minden jog fenntartva.</p>
+                    </div>
+                    <div class="col-md-6 credit-link text-start text-md-end">
+                        <p>HTML Template by <a href="https://templatesjungle.com/">TemplatesJungle</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</th:block>
+</body>
+</html>
