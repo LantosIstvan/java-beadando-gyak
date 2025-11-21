@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<!-- A fragment neve: "nav_items" (erre hivatkoztunk a layoutban) -->
+<th:block th:fragment="nav_items">
+    <!-- th:classappend: Hozzáadja az 'active' osztályt, ha az URL megegyezik -->
+    <li class="nav-item" th:classappend="${currentURI == '/'} ? 'active'">
+        <a th:href="@{/}" class="nav-link">Főoldal</a>
+    </li>
+    <li class="nav-item" th:classappend="${currentURI == '/adatbazis'} ? 'active'">
+        <a th:href="@{/adatbazis}" class="nav-link">Adatbázis</a>
+    </li>
+    <li class="nav-item" th:classappend="${currentURI == '/diagram'} ? 'active'">
+        <a th:href="@{/diagram}" class="nav-link">Diagram</a>
+    </li>
+    <li class="nav-item" th:classappend="${currentURI == '/crud'} ? 'active'">
+        <a th:href="@{/crud}" class="nav-link">CRUD</a>
+    </li>
+    <li class="nav-item" th:classappend="${currentURI == '/restful'} ? 'active'">
+        <a th:href="@{/restful}" class="nav-link">RESTful</a>
+    </li>
+    <li class="nav-item" th:classappend="${currentURI == '/kapcsolat'} ? 'active'">
+        <a th:href="@{/kapcsolat}" class="nav-link">Kapcsolat</a>
+    </li>
+    <!-- CSAK BEJELENTKEZETT FELHASZNÁLÓKNAK (User check) -->
+    <th:block sec:authorize="isAuthenticated()">
+        <li class="nav-item" th:classappend="${currentURI == '/uzenetek'} ? 'active'">
+            <a th:href="@{/uzenetek}" class="nav-link">Üzenetek</a>
+        </li>
+        <!-- CSAK ADMINOKNAK (Role check) -->
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${currentURI == '/admin'} ? 'active'">
+            <a th:href="@{/admin}" class="nav-link">Admin</a>
+        </li>
+    </th:block>
+</th:block>
+
+</body>
+</html>

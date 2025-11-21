@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="hu"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Cím: Ha a beágyazott oldal definiál címet, azt használja, egyébként az alapértelmezettet -->
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE" th:text="#{app.title}"></title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/assets/style-1.0.0.css}">
+    <script type="module" th:src="@{/assets/main-1.0.0.js}"></script>
+</head>
+<body>
+
+    <div th:replace="~{fragments/svg_icons :: svg_icons}"></div>
+
+    <header>
+        <div id="siteHeader" class="row align-items-center py-3 border-bottom g-0">
+            <!-- LOGÓ -->
+            <div class="col-6 col-lg-2 order-1 d-flex gap-3 justify-content-center">
+                <a th:href="@{/}" class="d-inline-flex align-items-center">
+                    <img th:src="@{/images/logo-express.svg}" th:alt="#{app.title}" class="img-fluid" style="height:41px;width:auto;">
+                </a>
+            </div>
+
+            <!-- USER AKCIÓK -->
+            <div class="col-6 col-lg-1 order-2 order-lg-3 d-flex justify-content-center">
+                <!-- Mobil Offcanvas Trigger -->
+                <a class="p-2 d-inline-flex align-items-center d-lg-none" data-bs-toggle="offcanvas" href="#userMenuOffcanvas" role="button" aria-controls="userMenuOffcanvas">
+                    <svg width="24" height="24" aria-hidden="true"><use xlink:href="#user"></use></svg>
+                    <span class="visually-hidden">Felhasználói menü</span>
+                </a>
+
+                <!-- Desktop Dropdown -->
+                <div class="dropdown d-none d-lg-block">
+                    <a class="p-2 d-inline-flex align-items-center dropdown-toggle me-lg-3" id="userDropdownDesktop" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                        <svg width="24" height="24" aria-hidden="true"><use xlink:href="#user"></use></svg>
+                        <span class="visually-hidden">Felhasználói menü</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdownDesktop">
+                        <!-- Bejelentkezve -->
+                        <div sec:authorize="isAuthenticated()">
+                            <li class="px-4 py-3 fw-bold text-dark">
+                                <span sec:authentication="name">Felhasználónév</span>
+                            </li>
+
+                            <li sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/run-migrations}" class="dropdown-item">Run migrations</a>
+                            </li>
+
+                            <li><hr class="dropdown-divider m-0"></li>
+                            <li>
+                                <form method="POST" th:action="@{/logout}">
+                                    <button type="submit" class="dropdown-item">Kijelentkezés</button>
+                                </form>
+                            </li>
+                        </div>
+                        <!-- Vendég -->
+                        <div sec:authorize="!isAuthenticated()">
+                            <li><a class="dropdown-item" th:href="@{/login}">Bejelentkezés</a></li>
+                            <li><a class="dropdown-item" th:href="@{/register}">Regisztráció</a></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Fő Menü -->
+            <div class="col-12 col-lg-9 order-3 order-lg-2">
+                <ul class="navbar-nav list-unstyled d-flex flex-row gap-3 gap-lg-5 justify-content-center flex-wrap align-items-center mb-0 fw-bold text-uppercase text-dark">
+                    <th:block th:replace="~{fragments/navigation :: nav_items}"></th:block>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mobil Offcanvas Tartalom -->
+        <div class="offcanvas offcanvas-top" tabindex="-1" id="userMenuOffcanvas" aria-labelledby="userMenuOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="userMenuOffcanvasLabel">Felhasználói menü</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Bezárás"></button>
+            </div>
+            <div class="offcanvas-body p-0">
+                <ul class="list-unstyled mb-0">
+                    <div sec:authorize="isAuthenticated()">
+                        <li class="px-4 py-3 fw-bold text-dark">
+                            <span sec:authentication="name">Felhasználónév</span>
+                        </li>
+
+                        <li sec:authorize="hasRole('ADMIN')">
+                            <a class="d-block px-4 py-3 text-decoration-none text-dark" th:href="@{/run-migrations}">Run migrations</a>
+                        </li>
+
+                        <li><hr class="dropdown-divider m-0"></li>
+                        <li class="border-top">
+                            <form method="POST" th:action="@{/logout}" class="m-0">
+                                <button type="submit" class="d-block w-100 text-start px-4 py-3 btn btn-link text-decoration-none">Kijelentkezés</button>
+                            </form>
+                        </li>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <li><a class="d-block px-4 py-3 text-decoration-none text-dark" th:href="@{/login}">Bejelentkezés</a></li>
+                        <li><a class="d-block px-4 py-3 text-decoration-none text-dark" th:href="@{/register}">Regisztráció</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <!--
+        Ide kerül az egyedi oldalak tartalma.
+        Az aloldalakon: <div layout:fragment="content">...</div>
+    -->
+    <main>
+        <div layout:fragment="content"></div><!-- Alapértelmezett tartalom, ha nincs felüldefiniálva -->
+    </main>
+
+    <footer class="pt-5">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-menu">
+                        <img th:src="@{/images/logo-express.svg}" width="240" height="70" th:alt="#{app.title}">
+                        <div class="social-links mt-3">
+                            <ul class="d-flex list-unstyled gap-2">
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#facebook"></use></svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#twitter"></use></svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#youtube"></use></svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#instagram"></use></svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/}" class="btn btn-outline-light">
+                                        <svg width="16" height="16"><use xlink:href="#amazon"></use></svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h5 class="widget-title" th:text="#{app.title}"></h5>
+                        <ul class="menu-list list-unstyled">
+                            <th:block th:replace="~{fragments/navigation :: nav_items}"></th:block>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h5 class="widget-title">Gyors hivatkozások</h5>
+                        <ul class="menu-list list-unstyled">
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Ajánlatok</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Kedvezménykuponok</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Üzletek</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Rendelés követése</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Webshop</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Információ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h5 class="widget-title">Ügyfélszolgálat</h5>
+                        <ul class="menu-list list-unstyled">
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">GYIK</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Kapcsolat</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Adatvédelmi tájékoztató</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Visszaküldés és visszatérítés</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Sütiszabályzat</a>
+                            </li>
+                            <li class="menu-item">
+                                <a th:href="@{/}" class="nav-link">Szállítási információk</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-bottom" class="pt-5">
+            <div class="container-lg">
+                <div class="row">
+                    <div class="col-md-6 copyright">
+                        <p>© <span th:text="${#dates.year(#dates.createNow())}"></span> <span th:text="#{app.title}"></span>. Minden jog fenntartva.</p>
+                    </div>
+                    <div class="col-md-6 credit-link text-start text-md-end">
+                        <p>HTML Template by <a href="https://templatesjungle.com/">TemplatesJungle</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
