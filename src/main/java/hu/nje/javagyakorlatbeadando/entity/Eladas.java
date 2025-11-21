@@ -1,6 +1,9 @@
 package hu.nje.javagyakorlatbeadando.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -26,21 +29,13 @@ public class Eladas {
     @Column(nullable = false, columnDefinition = "DECIMAL(10,2) UNSIGNED")
     private BigDecimal mennyiseg;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Long getAruKod() { return aruKod; }
     public void setAruKod(Long aruKod) { this.aruKod = aruKod; }

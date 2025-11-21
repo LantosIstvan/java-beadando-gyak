@@ -1,6 +1,9 @@
 package hu.nje.javagyakorlatbeadando.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,21 +17,13 @@ public class Kategoria {
     @Column(name = "kat_nev", nullable = false)
     private String katNev;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Long getKatKod() { return katKod; }
     public void setKatKod(Long katKod) { this.katKod = katKod; }

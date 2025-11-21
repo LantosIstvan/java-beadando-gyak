@@ -1,6 +1,9 @@
 package hu.nje.javagyakorlatbeadando.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +26,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    /* @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
@@ -37,7 +40,17 @@ public class User {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
+    } */
+
+    // Csak létrehozáskor jön létre, utána a Hibernate békén hagyja
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    // Létrehozáskor és minden módosításkor frissül
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

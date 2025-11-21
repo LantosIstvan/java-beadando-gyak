@@ -25,12 +25,12 @@ Az alkalmazás a `9443`-as porton érhető el.
 
 ## Minta felhasználók
 
-- Admin:
-  - Email: admin@example.com
-  - Jelszó: Admin
-- User1:
-  - Email: user1@example.com
-  - Jelszó: User1
+- **Admin:**
+  - **Email:** admin@example.com
+  - **Jelszó:** Admin
+- **User1:**
+  - **Email:** user1@example.com
+  - **Jelszó:** User1
 
 ## Adatbázis információk
 

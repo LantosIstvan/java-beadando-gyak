@@ -1,6 +1,9 @@
 package hu.nje.javagyakorlatbeadando.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -42,23 +45,13 @@ public class Message {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String message;
 
-    // Java oldali időbélyeg kezelés (schema.sql hiányában)
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    // Java oldali időbélyeg kezelés
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
