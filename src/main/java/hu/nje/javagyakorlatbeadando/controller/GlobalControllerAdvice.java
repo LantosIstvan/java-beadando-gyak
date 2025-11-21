@@ -1,6 +1,7 @@
 package hu.nje.javagyakorlatbeadando.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -15,4 +16,15 @@ public class GlobalControllerAdvice {
     public String currentURI(HttpServletRequest request) {
         return request.getRequestURI();
     }
+
+    /**
+     * Ez a metódus biztosítja, hogy ha van űrlap az oldalon,
+     * a session és a CSRF token időben létrejöjjön.
+     */
+    @ModelAttribute
+    public void forceSessionForCsrf(HttpServletRequest request) {
+        // Session létrehozása a CSRF hiba elkerülésére
+        HttpSession session = request.getSession(true);
+    }
+
 }

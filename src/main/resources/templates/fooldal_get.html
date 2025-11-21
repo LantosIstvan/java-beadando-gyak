@@ -1,18 +1,332 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/default_layout}">
 <head>
-    <title>Főoldal</title> <!-- Ez behelyettesítődik a $CONTENT_TITLE helyére -->
+    <title>Főoldal</title>
 </head>
 <body>
 
-<!-- Ez a tartalom kerül a <main>...</main> közé -->
 <div layout:fragment="content">
-    <div class="container">
-        <h1>Üdvözlet!</h1>
-        <p>Ez a fő tartalom.</p>
-    </div>
+
+    <!-- HERO SECTION -->
+    <!-- Inline style URL-ek kezelése Thymeleaf-fel -->
+    <section th:style="'background-image: url(' + @{/images/banner-1.jpg} + '); background-repeat: no-repeat; background-size: cover;'">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-lg-5 pt-5 mt-5">
+                    <h2 class="display-1 ls-1"><span class="fw-bold text-primary">Bio</span> élelmiszerek az <span class="fw-bold">ajtódhoz</span></h2>
+                    <p class="fs-4">
+                        Üdvözöljük az oldalunkon,
+                        <!-- FELHASZNÁLÓI ÜDVÖZLÉS LOGIKA -->
+                        <span sec:authorize="isAuthenticated()">
+                                <span sec:authorize="hasRole('ADMIN')">admin!</span>
+                                <span sec:authorize="!hasRole('ADMIN')">regisztrált látogató!</span>
+                            </span>
+                        <span sec:authorize="!isAuthenticated()">látogató!</span>
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#akcios-termekek" class="btn btn-primary text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Vásárlás indítása</a>
+                        <a href="#uzenjen-nekunk" class="btn btn-dark text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Üzenj nekünk</a>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col">
+                            <div class="row text-dark">
+                                <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">14k+</p></div>
+                                <div class="col"><p class="text-uppercase lh-sm mb-0">Termékváltozatok</p></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row text-dark">
+                                <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">50k+</p></div>
+                                <div class="col"><p class="text-uppercase lh-sm mb-0">Elégedett vásárlók</p></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row text-dark">
+                                <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">10+</p></div>
+                                <div class="col"><p class="text-uppercase lh-sm mb-0">Üzlethelyszínek</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-3 g-0 justify-content-center">
+                <div class="col">
+                    <div class="card border-0 bg-primary rounded-0 p-4 text-light">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <svg width="60" height="60"><use xlink:href="#fresh"></use></svg>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body p-0">
+                                    <h5 class="text-light">Frissen a farmról</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-0 bg-secondary rounded-0 p-4 text-light">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <svg width="60" height="60"><use xlink:href="#organic"></use></svg>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body p-0">
+                                    <h5 class="text-light">100% bio</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-0 bg-danger rounded-0 p-4 text-light">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <svg width="60" height="60"><use xlink:href="#delivery"></use></svg>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body p-0">
+                                    <h5 class="text-light">Ingyenes kiszállítás</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AKCIÓS TERMÉKEK -->
+    <section class="py-5 pb-5">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-header d-flex flex-wrap justify-content-between my-4">
+                        <h2 id="akcios-termekek" class="section-title">Akciós termékek</h2>
+                        <div class="d-flex align-items-center">
+                            <a th:href="@{/adatbazis}" class="btn btn-primary rounded-1">Összes termék</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
+                        <!-- TERMÉKEK LISTÁZÁSA -->
+                        <th:block th:if="${products != null and !products.empty}">
+                            <div class="col" th:each="product : ${products}">
+                                <!-- Lokális változók számítása (th:with) -->
+                                <!-- Rating logika: megkeressük a legnagyobb osztót 5-től lefelé -->
+                                <th:block th:with="price=${product.ar},
+                                                       rating=${(price % 5 == 0) ? 5 :
+                                                                (price % 4 == 0) ? 4 :
+                                                                (price % 3 == 0) ? 3 :
+                                                                (price % 2 == 0) ? 2 :
+                                                                (price % 1 == 0) ? 1 : 0}">
+                                    <div class="product-item">
+                                        <figure>
+                                            <a th:href="@{/}" th:title="${product.nev}">
+                                                <img th:src="@{__${'/' + product.product_pic}__}" th:alt="${product.nev}" class="tab-image">
+                                            </a>
+                                        </figure>
+                                        <div class="d-flex flex-column text-center">
+                                            <h3 class="fs-6 fw-normal" th:text="${product.nev}">Terméknév</h3>
+                                            <div>
+                                                    <span class="rating">
+                                                        <!-- Csillagok generálása 1-től 5-ig -->
+                                                        <svg th:each="i : ${#numbers.sequence(1, 5)}" width="18" height="18"
+                                                             th:class="${i <= rating} ? 'text-warning' : 'text-muted'">
+                                                            <use th:xlink:href="${i <= rating} ? '#star-full' : '#star-empty'"></use>
+                                                        </svg>
+                                                    </span>
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                                <!-- Eredeti ár formázva (egész számra kerekítve, szóközzel elválasztva) -->
+                                                <del th:text="${#numbers.formatDecimal(price, 0, 'WHITESPACE', 0, 'POINT')} + ' Ft'"></del>
+                                                <!-- Akciós ár (10% kedvezmény) -->
+                                                <span class="text-dark fw-semibold"
+                                                      th:text="${#numbers.formatDecimal(price * 0.9, 0, 'WHITESPACE', 0, 'POINT')} + ' Ft'">
+                                                    </span>
+                                                <span class="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">10% OFF</span>
+                                            </div>
+                                            <div class="button-area p-3 pt-0">
+                                                <div class="row g-1 mt-2">
+                                                    <div class="col-3"><input type="number" name="quantity" class="form-control border-dark-subtle input-number quantity" value="1"></div>
+                                                    <div class="col-7"><a href="#" class="btn btn-primary rounded-1 p-2 fs-7 btn-cart"><svg width="18" height="18"><use xlink:href="#cart"></use></svg> Kosárba</a></div>
+                                                    <div class="col-2"><a href="#" class="btn btn-outline-dark rounded-1 p-2 fs-6"><svg width="18" height="18"><use xlink:href="#heart"></use></svg></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </th:block>
+                        <!-- Ha üres a lista -->
+                        <th:block th:if="${products == null or products.empty}">
+                            <h3 class="fs-6 fw-normal">Nincs megjeleníthető adat.</h3>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BANNER BLOCKS -->
+    <section class="py-3">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="banner-blocks">
+                        <div class="banner-ad d-flex align-items-center large bg-info block-1"
+                             th:style="'background: url(' + @{/images/banner-ad-1.jpg} + ') no-repeat; background-size: cover;'">
+                            <div class="banner-content p-5">
+                                <div class="content-wrapper text-light">
+                                    <h3 class="banner-title text-light">Akciós termékek</h3>
+                                    <p>Akár 30% kedvezmény</p>
+                                    <a href="#akcios-termekek" class="btn-link text-white">Vásárolj most</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-ad bg-success-subtle block-2"
+                             th:style="'background: url(' + @{/images/banner-ad-2.jpg} + ') no-repeat; background-size: cover;'">
+                            <div class="banner-content align-items-center p-5">
+                                <div class="content-wrapper text-light">
+                                    <h3 class="banner-title text-light">Csomagajánlatok</h3>
+                                    <p>Akár 50% kedvezmény</p>
+                                    <a th:href="@{/kapcsolat}" class="btn-link text-white">Vásárolj most</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-ad bg-danger block-3"
+                             th:style="'background: url(' + @{/images/banner-ad-3.jpg} + ') no-repeat; background-size: cover;'">
+                            <div class="banner-content align-items-center p-5">
+                                <div class="content-wrapper text-light">
+                                    <h3 class="banner-title text-light">Kedvezménykuponok</h3>
+                                    <p>Akár 40% kedvezmény</p>
+                                    <a th:href="@{/kapcsolat}" class="btn-link text-white">Vásárolj most</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APP DOWNLOAD -->
+    <section class="pb-4 my-4">
+        <div class="container-lg">
+            <div class="bg-warning pt-5 rounded-5">
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-6">
+                            <h2 class="mt-5">Töltsd Le a <span th:text="#{app.title}">AppName</span> Appot</h2>
+                            <p>Online rendelés egyszerűen, gyorsan és megbízhatóan</p>
+                            <div class="d-flex gap-2 flex-wrap mb-5">
+                                <a th:href="@{/}" title="App store"><img th:src="@{/images/img-app-store.png}" alt="app-store"></a>
+                                <a th:href="@{/}" title="Google Play"><img th:src="@{/images/img-google-play.png}" alt="google-play"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <img th:src="@{/images/banner-onlineapp.png}" alt="phone" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KAPCSOLAT -->
+    <section id="uzenjen-nekunk">
+        <div class="container-lg">
+            <div class="bg-secondary text-light py-5 my-5"
+                 th:style="'background: url(' + @{/images/banner-newsletter.jpg} + ') no-repeat; background-size: cover;'">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-5 p-3">
+                            <div class="section-header">
+                                <h2 class="section-title display-5 text-light">Lépjen velünk kapcsolatba</h2>
+                            </div>
+                            <p>Az alábbi űrlap segítségével lépjen velünk kapcsolatba itt vagy a <a th:href="@{/kapcsolat}" style="color:#fff;">Kapcsolat</a> oldalon.</p>
+                        </div>
+                        <div class="col-md-5 p-3">
+                            <div th:replace="~{fragments/kapcsolat_form :: kapcsolat_form}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SZOLGÁLTATÁSOK -->
+    <section class="py-5">
+        <div class="container-lg">
+            <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-5">
+                <div class="col">
+                    <div class="card mb-3 border border-dark-subtle p-3">
+                        <div class="text-dark mb-3">
+                            <svg width="32" height="32"><use xlink:href="#package"></use></svg>
+                        </div>
+                        <div class="card-body p-0">
+                            <h5>Ingyenes kiszállítás</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3 border border-dark-subtle p-3">
+                        <div class="text-dark mb-3">
+                            <svg width="32" height="32"><use xlink:href="#secure"></use></svg>
+                        </div>
+                        <div class="card-body p-0">
+                            <h5>Biztonságos fizetés</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3 border border-dark-subtle p-3">
+                        <div class="text-dark mb-3">
+                            <svg width="32" height="32"><use xlink:href="#quality"></use></svg>
+                        </div>
+                        <div class="card-body p-0">
+                            <h5>Minőségi garancia</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3 border border-dark-subtle p-3">
+                        <div class="text-dark mb-3">
+                            <svg width="32" height="32"><use xlink:href="#savings"></use></svg>
+                        </div>
+                        <div class="card-body p-0">
+                            <h5>Garantált megtakarítás</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3 border border-dark-subtle p-3">
+                        <div class="text-dark mb-3">
+                            <svg width="32" height="32"><use xlink:href="#offers"></use></svg>
+                        </div>
+                        <div class="card-body p-0">
+                            <h5>Napi ajánlatok</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
 </body>
