@@ -1,0 +1,12 @@
+<th:block th:fragment="banner(title)" xmlns:th="http://www.thymeleaf.org">
+
+    <section class="jarallax py-5">
+        <img th:src="@{/images/banner-1.jpg}" class="jarallax-img" th:alt="|${title} fejléckép|">
+        <div class="hero-content py-0 py-md-5">
+            <div class="container-lg d-flex flex-column d-md-block align-items-center">
+                <h1 th:text="${title}"></h1>
+            </div>
+        </div>
+    </section>
+
+</th:block>

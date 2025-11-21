@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}"
+      th:with="pageTitle='Kapcsolat'">
+<head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <th:block th:replace="~{fragments/banner :: banner(title=${pageTitle})}"></th:block>
+
+    <section class="contact-us py-5 my-5">
+        <div class="container-lg">
+            <div class="row">
+                <!-- BAL OLDAL: ELÉRHETŐSÉGEK -->
+                <div class="contact-info col-lg-6 pb-3">
+                    <p>Amennyiben termékeinkről és szolgáltatásainkról szeretnél érdeklődni, vagy csak kérdésed van, állunk szíves rendelkezésedre.</p>
+                    <div class="page-content d-flex flex-wrap">
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="content-box text-dark pe-4 mb-5">
+                                <h3 class="card-title">Iroda</h3>
+                                <div class="contact-address pt-3">
+                                    <p>6000 Kecskemét, Izsáki út 10.</p>
+                                </div>
+                                <div class="contact-number">
+                                    <p><a href="tel:#">+36 76 123 1234</a></p>
+                                    <p><a href="tel:#">+36 76 123 1235</a></p>
+                                </div>
+                                <div class="email-address">
+                                    <p><a href="mailto:iroda@domain.com">iroda@domain.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="content-box">
+                                <h3 class="card-title">Vezetőség</h3>
+                                <div class="contact-address pt-3">
+                                    <p>6000 Kecskemét, Izsáki út 10.</p>
+                                </div>
+                                <div class="contact-number">
+                                    <p><a href="tel:#">+36 76 123 1236</a></p>
+                                    <p><a href="tel:#">+36 76 123 1237</a></p>
+                                </div>
+                                <div class="email-address">
+                                    <p><a href="mailto:ceo@domain.com">ceo@domain.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- JOBB OLDAL: ŰRLAP -->
+                <div id="uzenjen-nekunk" class="inquiry-item col-lg-6">
+                    <h2>Lépjen velünk kapcsolatba</h2>
+                    <p>Az alábbi űrlap segítségével lépjen velünk kapcsolatba.</p>
+                    <div th:replace="~{fragments/kapcsolat_form :: kapcsolat_form}"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>
