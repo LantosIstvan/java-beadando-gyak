@@ -14,15 +14,10 @@
         <!-- SIKERES ÜZENET (Flash attribute vagy Model attribute) -->
         <div th:if="${success_msg}" class="alert alert-success" role="alert" th:text="${success_msg}"></div>
 
-        <!-- GLOBÁLIS HIBAÜZENET -->
-        <div th:if="${error_msg}" class="alert alert-danger" role="alert" th:text="${error_msg}"></div>
-
         <div class="row g-3">
-
             <!-- NÉV MEZŐ -->
             <div class="col-md-6">
                 <label for="name" class="form-label d-none">Név</label>
-
                 <!-- BEJELENTKEZVE: Automatikus kitöltés + letiltva -->
                 <div sec:authorize="isAuthenticated()">
                     <!-- Hidden input a kötéshez (hogy elküldje az értéket) -->
@@ -34,7 +29,6 @@
                            th:value="${#authentication.name}"
                            disabled>
                 </div>
-
                 <!-- VENDÉG: Szerkeszthető mező -->
                 <div sec:authorize="!isAuthenticated()">
                     <input type="text"
@@ -44,7 +38,6 @@
                            th:field="*{name}"
                            th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
                 </div>
-
                 <!-- Validációs hiba -->
                 <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Hiba</div>
             </div>
@@ -52,7 +45,6 @@
             <!-- EMAIL MEZŐ -->
             <div class="col-md-6">
                 <label for="email" class="form-label d-none">Email</label>
-
                 <!-- BEJELENTKEZVE -->
                 <div sec:authorize="isAuthenticated()">
                     <!--
@@ -67,7 +59,6 @@
                            th:value="${#authentication.principal.email}"
                            disabled>
                 </div>
-
                 <!-- VENDÉG -->
                 <div sec:authorize="!isAuthenticated()">
                     <input type="text"
@@ -77,7 +68,6 @@
                            th:field="*{email}"
                            th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
                 </div>
-
                 <!-- Validációs hiba -->
                 <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Hiba</div>
             </div>
