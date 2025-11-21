@@ -5,10 +5,10 @@
 
 <th:block th:fragment="kapcsolat_form">
 
-    <!--
+    <!--/*
        th:object="${kapcsolat_form_params}" -> A Controller által átadott DTO objektum.
        Ez kezeli az értékek visszatöltését hiba esetén.
-    -->
+    */-->
     <form th:action="@{/kapcsolat}" method="POST" th:object="${kapcsolat_form_params}">
 
         <!-- SIKERES ÜZENET (Flash attribute) -->
@@ -21,12 +21,12 @@
                 <!-- BEJELENTKEZVE: Automatikus kitöltés + letiltva -->
                 <div sec:authorize="isAuthenticated()">
                     <!-- Hidden input a kötéshez (hogy elküldje az értéket) -->
-                    <input type="hidden" name="name" th:value="${#authentication.name}">
+                    <input type="hidden" name="name" th:value="${#authentication.principal.username}">
                     <!-- Megjelenített disabled input -->
                     <input type="text"
                            class="form-control border border-secondary rounded ps-2 py-2 me-3"
                            placeholder="Név*"
-                           th:value="${#authentication.name}"
+                           th:value="${#authentication.principal.username}"
                            disabled>
                 </div>
                 <!-- VENDÉG: Szerkeszthető mező -->
@@ -52,11 +52,11 @@
                          ha a UserDetails implementációdban van 'email' mező és getter.
                          Ha a username az email, akkor használd a ${#authentication.name}-et itt is.
                     -->
-                    <input type="hidden" name="email" th:value="${#authentication.principal.email}">
+                    <input type="hidden" name="email" th:value="${#authentication.principal.username}">
                     <input type="text"
                            class="form-control border border-secondary rounded ps-2 py-2 me-3"
                            placeholder="Email*"
-                           th:value="${#authentication.principal.email}"
+                           th:value="${#authentication.principal.username}"
                            disabled>
                 </div>
                 <!-- VENDÉG -->

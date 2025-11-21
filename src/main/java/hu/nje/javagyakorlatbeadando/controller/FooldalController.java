@@ -1,6 +1,6 @@
 package hu.nje.javagyakorlatbeadando.controller;
 
-import hu.nje.javagyakorlatbeadando.entity.Message;
+import hu.nje.javagyakorlatbeadando.dto.KapcsolatDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +10,7 @@ public class FooldalController {
 
     @GetMapping("/")
     public String getFooldal(Model model) {
-        model.addAttribute("kapcsolat_form_params", new Message());
+        model.addAttribute("kapcsolat_form_params", new KapcsolatDto());
         // model.addAttribute("products", productList); // TODO
         return "fooldal_get";
     }

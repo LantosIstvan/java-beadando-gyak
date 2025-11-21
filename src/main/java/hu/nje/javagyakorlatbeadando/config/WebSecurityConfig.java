@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,8 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class WebSecurityConfig {
-    // @Autowired
-    // private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -30,15 +31,20 @@ public class WebSecurityConfig {
         http
             .authorizeHttpRequests(
                 auth -> auth
+                    // Csak be nem jelentkezett felhasználók érhetik el a login és register oldalakat
+                    .requestMatchers("/login", "/register").anonymous()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/fooldal").authenticated()
+                    .requestMatchers("/").authenticated()
                     .anyRequest().permitAll() // Alap esetben engedélyezünk mindent, majd később korlátozunk
             )
             .formLogin(
                 form -> form
-                    .defaultSuccessUrl("/fooldal").permitAll()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/")
+                    .permitAll()
             ).logout(
                 logout -> logout
+                    .logoutUrl("/logout")
                     .logoutSuccessUrl("/")
                     .permitAll()
             );

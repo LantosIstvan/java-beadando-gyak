@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}"
+      th:with="pageTitle='Bejelentkezés'">
+<head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <th:block th:replace="~{fragments/banner :: banner(title=${pageTitle})}"></th:block>
+
+    <section class="my-5 py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 mx-auto">
+                    <h1 th:text="${pageTitle}"></h1>
+
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        Hibás felhasználónév vagy jelszó.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success">
+                        Sikeres kijelentkezés.
+                    </div>
+                    <div th:if="${param.success}" class="alert alert-success">
+                        Sikeres regisztráció! Kérjük jelentkezzen be.
+                    </div>
+
+                    <form th:action="@{/login}" method="POST">
+                        <div class="mb-3">
+                            <label for="inputUsername" class="form-label">Email</label>
+                            <input
+                                type="text"
+                                class="form-control border border-secondary rounded ps-2 py-2 me-3"
+                                name="username"
+                                id="inputUsername"
+                                required
+                                autofocus
+                            >
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputPassword" class="form-label">Jelszó</label>
+                            <input
+                                type="password"
+                                class="form-control border border-secondary rounded ps-2 py-2 me-3"
+                                name="password"
+                                id="inputPassword"
+                                required
+                            >
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg text-uppercase btn-rounded-none">Küldés</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>
