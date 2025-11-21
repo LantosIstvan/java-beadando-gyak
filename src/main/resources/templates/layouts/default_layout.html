@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8">
@@ -13,19 +12,10 @@
     <script type="module" th:src="@{/assets/main-1.0.0.js}"></script>
 </head>
 <body>
-
     <th:block th:replace="~{fragments/header :: header}"></th:block>
-
-    <!-- ==================== MAIN CONTENT ==================== -->
-    <!--
-        Ide kerül az egyedi oldalak tartalma.
-        Az aloldalakon: <div layout:fragment="content">...</div>
-    -->
     <main>
         <div layout:fragment="content"></div><!-- Alapértelmezett tartalom, ha nincs felüldefiniálva -->
     </main>
-
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
-
 </body>
 </html>
