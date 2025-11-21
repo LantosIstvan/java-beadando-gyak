@@ -30,6 +30,9 @@ public class Aru {
     )
     private Kategoria kategoria;
 
+    @OneToOne(mappedBy = "aru")
+    private Eladas eladas;
+
     @Column(nullable = false)
     private String nev;
 
@@ -47,11 +50,16 @@ public class Aru {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+
+
     public Long getAruKod() { return aruKod; }
     public void setAruKod(Long aruKod) { this.aruKod = aruKod; }
 
     public Kategoria getKategoria() { return kategoria; }
     public void setKategoria(Kategoria kategoria) { this.kategoria = kategoria; }
+
+    public Eladas getEladas() { return eladas; }
+    public void setEladas(Eladas eladas) { this.eladas = eladas; }
 
     public String getNev() { return nev; }
     public void setNev(String nev) { this.nev = nev; }
