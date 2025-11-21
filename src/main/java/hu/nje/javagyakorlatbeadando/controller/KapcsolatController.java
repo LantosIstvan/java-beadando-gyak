@@ -26,10 +26,12 @@ public class KapcsolatController {
     }
 
     @PostMapping("/kapcsolat")
-    public String postKapcsolat(@Valid @ModelAttribute("kapcsolat_form_params") KapcsolatDto kapcsolatDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            return "kapcsolat_get";
-        }
+    public String postKapcsolat(
+        @Valid @ModelAttribute("kapcsolat_form_params") KapcsolatDto kapcsolatDto,
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) return "kapcsolat_get";
 
         Message message = new Message();
         message.setName(kapcsolatDto.getName());

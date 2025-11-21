@@ -11,7 +11,7 @@
     -->
     <form th:action="@{/kapcsolat}" method="POST" th:object="${kapcsolat_form_params}">
 
-        <!-- SIKERES ÜZENET (Flash attribute vagy Model attribute) -->
+        <!-- SIKERES ÜZENET (Flash attribute) -->
         <div th:if="${success_msg}" class="alert alert-success" role="alert" th:text="${success_msg}"></div>
 
         <div class="row g-3">
@@ -39,7 +39,7 @@
                            th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
                 </div>
                 <!-- Validációs hiba -->
-                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Hiba</div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             </div>
 
             <!-- EMAIL MEZŐ -->
@@ -69,7 +69,7 @@
                            th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
                 </div>
                 <!-- Validációs hiba -->
-                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Hiba</div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
             </div>
 
             <!-- TELEFON MEZŐ -->
@@ -81,7 +81,7 @@
                        placeholder="Telefon"
                        th:field="*{phone}"
                        th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'">
-                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Hiba</div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
             </div>
 
             <!-- TÁRGY MEZŐ -->
@@ -93,7 +93,7 @@
                        placeholder="Tárgy*"
                        th:field="*{subject}"
                        th:classappend="${#fields.hasErrors('subject')} ? 'is-invalid'">
-                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}">Hiba</div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
             </div>
 
             <!-- ÜZENET MEZŐ -->
@@ -104,7 +104,7 @@
                               placeholder="Üzenet*"
                               th:field="*{message}"
                               th:classappend="${#fields.hasErrors('message')} ? 'is-invalid'"></textarea>
-                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Hiba</div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></div>
             </div>
 
             <!-- KÜLDÉS GOMB -->
