@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="hu"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <title>Admin Felület</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <th:block th:replace="~{fragments/banner :: banner(title=${pageTitle})}"></th:block>
+
+
+    <section class="contact-us py-5 my-5">
+        <div class="container-lg">
+            <div class="row">
+
+                <!-- Flash üzenetek -->
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                <!-- Felhasználók listája -->
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Név</th>
+                                <th>Email</th>
+                                <th>Szerep</th>
+                                <th>Műveletek</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.id}"></td>
+                                <td th:text="${user.username}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.role == 'ROLE_ADMIN' ? 'admin' : 'user'}"></td>
+                                <td>
+                                    <!-- Törlés űrlap -->
+                                    <form th:action="@{/admin/delete}" method="POST" onsubmit="return confirm('Biztosan törli a felhasználót?');" style="display:inline">
+                                        <input type="hidden" name="id" th:value="${user.id}" />
+                                        <button type="submit" class="btn btn-sm btn-danger">Törlés</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(users)}">
+                                <td colspan="5">Nincsenek felhasználók.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+
