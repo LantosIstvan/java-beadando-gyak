@@ -6,7 +6,7 @@
             <thead>
             <tr>
                 <th scope="col">Árukód</th>
-                <th scope="col">Termékfotó</th>
+                <th scope="col" th:if="${activePage != '/crud'}">Termékfotó</th>
                 <th scope="col">Név</th>
                 <th scope="col" th:if="${activePage == '/adatbazis'}">Kategória</th>
                 <th scope="col">Mértékegység</th>
@@ -19,7 +19,7 @@
             <tbody>
             <tr th:each="product : ${products}">
                 <th scope="row" th:text="${product.aruKod}"></th>
-                <td>
+                <td th:if="${activePage != '/crud'}">
                     <img
                             th:src="@{${'/' + product.productPic}}"
                             th:alt="${product.nev}"

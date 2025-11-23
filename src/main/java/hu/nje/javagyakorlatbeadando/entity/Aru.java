@@ -30,7 +30,8 @@ public class Aru {
     )
     private Kategoria kategoria;
 
-    @OneToOne(mappedBy = "aru")
+    // A cascade beállítás biztosítja, hogy az Aru törlésekor a kapcsolódó Eladas is törlődjön
+    @OneToOne(mappedBy = "aru", cascade = CascadeType.ALL)
     private Eladas eladas;
 
     @Column(nullable = false)

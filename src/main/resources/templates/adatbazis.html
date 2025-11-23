@@ -19,7 +19,7 @@
                     <div th:if="${success_msg}" class="alert alert-success" th:text="${success_msg}"></div>
                     <div th:if="${error_msg}" class="alert alert-danger" th:text="${error_msg}"></div>
 
-                    <a th:href="@{/crud/create}" class="btn btn-success">Új áru felvétele</a>
+                    <a th:if="${activePage == '/crud'}" th:href="@{/crud/create}" class="btn btn-success">Új áru felvétele</a>
 
                     <!-- egyszerű információ az áruk számáról -->
                     <div class="mt-3">

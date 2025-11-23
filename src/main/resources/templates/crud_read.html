@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}"
+      th:with="pageTitle='CRUD'">
+<head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <th:block th:replace="~{fragments/banner :: banner(title=${pageTitle})}"></th:block>
+
+    <section class="my-5 py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-10 mx-auto">
+
+                    <div th:if="${success_msg}" class="alert alert-success" th:text="${success_msg}"></div>
+                    <div th:if="${error_msg}" class="alert alert-danger" th:text="${error_msg}"></div>
+
+                    <a th:if="${activePage == '/crud'}" th:href="@{/crud/create}" class="btn btn-success">Új áru felvétele</a>
+
+                    <!-- egyszerű információ az áruk számáról -->
+                    <div class="mt-3">
+                        Összes áru: <span th:text="${products != null ? products.size() : 0}">0</span>
+                    </div>
+
+                    <th:block th:replace="~{fragments/table_row :: table_row}"></th:block>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>
