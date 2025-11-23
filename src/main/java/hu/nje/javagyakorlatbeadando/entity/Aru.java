@@ -75,4 +75,12 @@ public class Aru {
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public BigDecimal getBevetel() {
+        if (this.ar == null || this.eladas == null || this.eladas.getMennyiseg() == null) {
+            return BigDecimal.ZERO;
+        }
+        return this.ar.multiply(this.eladas.getMennyiseg());
+    }
+
 }

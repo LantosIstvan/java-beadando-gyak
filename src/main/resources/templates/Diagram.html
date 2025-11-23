@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}"> <!-- 1. Ez hivatkozik a te létező layoutodra -->
+<head>
+    <title>Diagram</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Banner -->
+    <div th:replace="~{fragments/banner :: banner(title=${title})}"></div>
+
+    <!-- JSON Payload -->
+    <script id="diagram-payload" type="application/json" th:utext="${diagramPayload}"></script>
+
+    <!-- Chart.js Szekció -->
+    <section class="my-5">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-12 col-md-10 col-lg-10 mx-auto">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h2 class="h5 m-0">Legnagyobb bevételt hozó termékek</h2>
+                            </div>
+                            <div style="height: 360px">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Táblázat Szekció -->
+    <section class="my-5">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-12 col-md-10 col-lg-10 mx-auto">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th style="width: 60px;">Kép</th>
+                                <th>Terméknév</th>
+                                <th>Kategória</th>
+                                <th class="text-end">Ár</th>
+                                <th class="text-end">Mennyiség</th>
+                                <!-- Dinamikus fejlécek -->
+                                <th class="text-end" th:if="${activePage == '/diagram'}">Összesen (Bevétel)</th>
+                                <th class="text-end" th:if="${activePage == '/adatbazis'}">Műveletek</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- 4. Sorok: A te fragments/table_row.html fájlodat hívjuk -->
+                            <th:block th:each="aru : ${products}">
+                                <tr th:replace="~{fragments/table_row :: row(${aru})}"></tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const payloadEl = document.getElementById('diagram-payload');
+            if (payloadEl) {
+                const data = JSON.parse(payloadEl.textContent);
+                const ctx = document.getElementById('revenueChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+            }
+        });
+    </script>
+
+</div>
+</body>
+</html>
