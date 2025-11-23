@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user));
     }
 
-    // A kiválasztott felhasználó szerepeinek lekérdezése:-
+    // A kiválasztott felhasználó szerepeinek lekérdezése:.
     // A szerepek is olyan tulajdonsága a felhasználónak, mint a neve, címe, telefonszáma, …
     private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getRole());

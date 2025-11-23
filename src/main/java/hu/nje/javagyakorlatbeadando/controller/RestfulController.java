@@ -1,9 +1,7 @@
 package hu.nje.javagyakorlatbeadando.controller;
 
 import hu.nje.javagyakorlatbeadando.entity.Aru;
-// import hu.nje.javagyakorlatbeadando.entity.Kategoria;
 import hu.nje.javagyakorlatbeadando.repository.AruRepository;
-// import hu.nje.javagyakorlatbeadando.repository.KategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +16,6 @@ public class RestfulController {
 
     @Autowired
     private AruRepository aruRepository;
-
-    // @Autowired
-    // private KategoriaRepository kategoriaRepository; // Kell a kategória kereséshez
 
     @GetMapping
     public List<Aru> getAruk() {
@@ -39,17 +34,9 @@ public class RestfulController {
             ujAru.setAr(BigDecimal.valueOf(Double.valueOf(payload.get("ar").toString())));
             ujAru.setEgyseg((String) payload.get("egyseg"));
 
-            // Dátumok kezelése (ha nincsenek automatizálva az Entity-ben)
-            // ujAru.setCreated_at(LocalDateTime.now());
-
             // KATEGÓRIA KEZELÉSE (Ez a kritikus rész!)
             // A frontendről egy "katKod" nevű mezőt várunk az ID-val
             Long katId = Long.valueOf(payload.get("katKod").toString());
-
-            // Kategoria kategoria = kategoriaRepository.findById(katId)
-            //     .orElseThrow(() -> new RuntimeException("Nincs ilyen kategória!"));
-
-            // ujAru.setKategoria(kategoria); // Összekötjük a terméket a kategóriával
 
             Aru mentettAru = aruRepository.save(ujAru);
             return ResponseEntity.ok(mentettAru);

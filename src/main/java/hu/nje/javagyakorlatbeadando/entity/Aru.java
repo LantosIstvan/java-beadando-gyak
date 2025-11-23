@@ -1,6 +1,5 @@
 package hu.nje.javagyakorlatbeadando.entity;
 
-// import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,7 +30,6 @@ public class Aru {
     )
     private Kategoria kategoria;
 
-    // @JsonIgnore
     @OneToOne(mappedBy = "aru")
     private Eladas eladas;
 
@@ -75,12 +73,4 @@ public class Aru {
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
-
-    /* public BigDecimal getBevetel() {
-        if (this.ar == null || this.eladas == null || this.eladas.getMennyiseg() == null) {
-            return BigDecimal.ZERO;
-        }
-        return this.ar.multiply(this.eladas.getMennyiseg());
-    } */
-
 }

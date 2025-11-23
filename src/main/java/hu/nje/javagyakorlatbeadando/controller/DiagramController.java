@@ -24,15 +24,14 @@ public class DiagramController {
 
     @GetMapping("/diagram")
     public String index(Model model) {
-        // LEKÉRDEZÉS
         List<Aru> aruList = aruRepository.findTop5ByOrderByEladas_MennyisegDesc();
 
-        // ADATFELDOLGOZÁS (DTO konverzió és Payload gyártása)
+        // Adatfeldolgozás (DTO konverzió és Payload gyártása)
         List<ProductDto> products = new ArrayList<>();
         List<String> labels = new ArrayList<>();
         List<BigDecimal> revenues = new ArrayList<>();
 
-        // Kép logika másolása (vagy kiszervezése service-be)
+        // Kép logika
         Map<String, String> categoryImages = new HashMap<>();
         categoryImages.put("Húsáru", "images/product-thumb-6.png");
         categoryImages.put("Zöldség", "images/product-thumb-5.png");
@@ -70,7 +69,7 @@ public class DiagramController {
             revenues.add(osszeg);
         }
 
-        // JSON GENERÁLÁS (PHP json_encode helyett)
+        // JSON generálás
         Map<String, Object> payloadMap = new HashMap<>();
         payloadMap.put("labels", labels);
         payloadMap.put("revenues", revenues);
@@ -83,9 +82,8 @@ public class DiagramController {
             e.printStackTrace();
         }
 
-        // ADATÁTADÁS A NÉZETNEK
-        model.addAttribute("products", products); // A táblázatnak
-        model.addAttribute("diagramPayload", diagramPayload); // A grafikonnak
+        model.addAttribute("products", products); // Adatátadás táblázatnak
+        model.addAttribute("diagramPayload", diagramPayload); // Adatátadás grafikonnak
         model.addAttribute("activePage", "/diagram");
         return "diagram";
     }
