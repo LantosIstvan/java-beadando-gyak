@@ -1,5 +1,6 @@
 package hu.nje.javagyakorlatbeadando.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,6 +32,7 @@ public class Aru {
     private Kategoria kategoria;
 
     @OneToOne(mappedBy = "aru")
+    @JsonIgnore
     private Eladas eladas;
 
     @Column(nullable = false)

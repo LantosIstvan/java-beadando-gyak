@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <title>Restful API Kezelő</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container mt-4">
+        <h2 class="mb-4">🛒 Készletkezelés (REST API Demo)</h2>
+
+        <!-- ŰRLAP -->
+        <div class="card shadow-sm mb-5">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Új áru felvétele</h5>
+            </div>
+            <div class="card-body">
+                <form id="aruForm">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="nev" class="form-label">Termék neve</label>
+                            <input type="text" class="form-control" id="nev" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="ar" class="form-label">Ár (Ft)</label>
+                            <input type="number" class="form-control" id="ar" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="egyseg" class="form-label">Egység</label>
+                            <select id="egyseg" class="form-select">
+                                <option value="kg">kg</option>
+                                <option value="db">db</option>
+                                <option value="l">liter</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-success w-100">Mentés</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- LISTA -->
+        <h4 class="mb-3">Aktuális Készlet</h4>
+        <div id="aruLista" class="row">
+            <!-- Ide tölti be a JavaScript a kártyákat -->
+            <div class="col-12 text-center text-muted">
+                <div class="spinner-border" role="status"></div>
+                <p>Adatok betöltése...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <!-- Mivel ez a content része, a layoutban a body végére kerül, vagy ahol a content van -->
+    <script>
+        // Oldal betöltésekor fut le
+        document.addEventListener("DOMContentLoaded", function() {
+            refreshList();
+        });
+
+        // Áruk lekérése (GET)
+        function refreshList() {
+            fetch('/api/aruk')
+                .then(response => response.json())
+                .then(data => {
+                    let htmlContent = '';
+                    if(data.length === 0) {
+                        htmlContent = '<div class="alert alert-info">Nincs megjeleníthető áru az adatbázisban.</div>';
+                    } else {
+                        data.forEach(aru => {
+                            // Figyelj: a Java entity mezőnevei itt tevePúpos (camelCase) formában jönnek át!
+                            // Tehát aru_kod helyett valószínűleg aruKod
+                            let id = aru.aruKod || aru.aru_kod || aru.id;
+
+                            htmlContent += `
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${aru.nev}</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">${aru.ar} Ft / ${aru.egyseg}</h6>
+                                            <p class="card-text"><small>Azonosító: ${id}</small></p>
+                                        </div>
+                                        <div class="card-footer bg-white border-top-0">
+                                            <button onclick="deleteProduct(${id})" class="btn btn-outline-danger btn-sm w-100">Törlés</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                    document.getElementById('aruLista').innerHTML = htmlContent;
+                })
+                .catch(error => console.error('Hiba:', error));
+        }
+
+        // Új áru mentése (POST)
+        document.getElementById('aruForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const ujAru = {
+                nev: document.getElementById('nev').value,
+                ar: document.getElementById('ar').value,
+                egyseg: document.getElementById('egyseg').value,
+                katKod: 1  // <--- FONTOS: Ide írj be egy létező kategória ID-t az adatbázisodból!
+            };
+
+            fetch('/api/aruk', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(ujAru)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('aruForm').reset();
+                        refreshList(); // Lista frissítése azonnal
+                    } else {
+                        alert("Hiba történt a mentés során!");
+                    }
+                });
+        });
+
+        // Törlés (DELETE)
+        function deleteProduct(id) {
+            if(confirm('Biztosan törölni szeretnéd ezt a terméket?')) {
+                fetch(`/api/aruk/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            refreshList();
+                        } else {
+                            alert("Hiba a törlésnél!");
+                        }
+                    });
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>
