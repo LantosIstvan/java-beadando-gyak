@@ -34,7 +34,7 @@ services:
   ### database ###################################################################
   # https://hub.docker.com/_/mariadb
   database:
-    image: mariadb:12.0.2-noble
+    image: mariadb:12.1.2-noble
     volumes:
       - db_data:/var/lib/mysql
       # - ./sql:/docker-entrypoint-initdb.d:ro

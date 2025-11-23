@@ -37,28 +37,7 @@
         <div class="container-lg">
             <div class="row">
                 <div class="col-12 col-md-10 col-lg-10 mx-auto">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover align-middle">
-                            <thead class="table-light">
-                            <tr>
-                                <th style="width: 60px;">Kép</th>
-                                <th>Terméknév</th>
-                                <th>Kategória</th>
-                                <th class="text-end">Ár</th>
-                                <th class="text-end">Mennyiség</th>
-                                <!-- Dinamikus fejlécek -->
-                                <th class="text-end" th:if="${activePage == '/diagram'}">Összesen (Bevétel)</th>
-                                <th class="text-end" th:if="${activePage == '/adatbazis'}">Műveletek</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Sorok: fragments/table_row.html hívása -->
-                            <th:block th:each="aru : ${products}">
-                                <tr th:replace="~{fragments/table_row :: row(${aru})}"></tr>
-                            </th:block>
-                            </tbody>
-                        </table>
-                    </div>
+                    <th:block th:replace="~{fragments/table_row :: table_row}"></th:block>
                 </div>
             </div>
         </div>

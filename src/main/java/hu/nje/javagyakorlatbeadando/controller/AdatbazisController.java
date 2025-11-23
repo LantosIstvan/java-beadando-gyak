@@ -22,7 +22,7 @@ public class AdatbazisController {
 
     @GetMapping("/adatbazis")
     public String listProducts(Model model) {
-        List<Aru> aruList = aruRepository.findAll(Sort.by(Sort.Direction.ASC, "aruKod"));
+        List<Aru> aruList = aruRepository.findAll(Sort.by(Sort.Direction.ASC, "nev"));
         List<ProductDto> products = new ArrayList<>();
 
         Map<String, String> categoryImages = new HashMap<>();

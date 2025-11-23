@@ -34,7 +34,7 @@ public class WebSecurityConfig {
                     // Csak be nem jelentkezett felhasználók érhetik el a login és register oldalakat
                     .requestMatchers("/login", "/register").anonymous()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/").authenticated()
+                    .requestMatchers("/uzenetek").authenticated()
                     .anyRequest().permitAll() // Alap esetben engedélyezünk mindent, majd később korlátozunk
             )
             .formLogin(
@@ -47,6 +47,11 @@ public class WebSecurityConfig {
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/")
                     .permitAll()
+            )
+            .exceptionHandling(exception -> exception
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.sendRedirect("/");
+                })
             );
         return http.build();
     }

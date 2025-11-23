@@ -3,7 +3,6 @@ package hu.nje.javagyakorlatbeadando.repository;
 import hu.nje.javagyakorlatbeadando.entity.Aru;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,9 +16,10 @@ public interface AruRepository extends JpaRepository<Aru, Long> {
      */
     List<Aru> findTop10ByOrderByArAsc();
 
-    @Query("SELECT a FROM Aru a " +
-        "LEFT JOIN FETCH a.eladas e " +
-        "LEFT JOIN FETCH a.kategoria k " +
-        "ORDER BY e.mennyiseg DESC NULLS LAST")
-    List<Aru> findTopByQuantity(Pageable pageable);
+    /**
+     * Lekéri a 5 legnagyobb mennyiséggel rendelkező árut.
+     * A Spring Data JPA metódusnév konvenció segítségével egyszerűbben is lekérhető,
+     * SQL írása nélkül. Az alulvonás (_) jelzi a beágyazott tulajdonságot (Eladas -> mennyiseg).
+     */
+    List<Aru> findTop5ByOrderByEladas_MennyisegDesc();
 }

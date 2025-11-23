@@ -1,8 +1,9 @@
 package hu.nje.javagyakorlatbeadando.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.nje.javagyakorlatbeadando.dto.ProductDto;
 import hu.nje.javagyakorlatbeadando.entity.Aru;
 import hu.nje.javagyakorlatbeadando.repository.AruRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -23,30 +24,53 @@ public class DiagramController {
 
     @GetMapping("/diagram")
     public String index(Model model) {
-        // String title = "Diagram menü";
+        // LEKÉRDEZÉS
+        List<Aru> aruList = aruRepository.findTop5ByOrderByEladas_MennyisegDesc();
 
-        // 1. LEKÉRDEZÉS
-        // PHP: ->orderByDesc('qty')->limit(5)
-        // Java: Repository metódus hívása, PageRequest-tel a limitáláshoz (top 5)
-        List<Aru> products = aruRepository.findTopByQuantity(PageRequest.of(0, 5));
-
-        // 2. ADATFELDOLGOZÁS (Payload gyártása a Chart.js-nek)
+        // ADATFELDOLGOZÁS (DTO konverzió és Payload gyártása)
+        List<ProductDto> products = new ArrayList<>();
         List<String> labels = new ArrayList<>();
         List<BigDecimal> revenues = new ArrayList<>();
 
-        for (Aru p : products) {
-            // Címkék: Termék neve
-            labels.add(p.getNev());
+        // Kép logika másolása (vagy kiszervezése service-be)
+        Map<String, String> categoryImages = new HashMap<>();
+        categoryImages.put("Húsáru", "images/product-thumb-6.png");
+        categoryImages.put("Zöldség", "images/product-thumb-5.png");
+        categoryImages.put("Tejtermék", "images/product-thumb-12.png");
+        categoryImages.put("Édesség", "images/product-thumb-22.png");
+        categoryImages.put("Tészták", "images/product-thumb-17.png");
+        categoryImages.put("Üditőitalok", "images/product-thumb-30.png");
 
-            // Értékek: PHP-ban $p->osszeg (számított mező).
-            // Itt az entitás getBevetel() metódusát hívjuk (ár * mennyiség).
-            BigDecimal osszeg = p.getBevetel();
+        for (Aru aru : aruList) {
+            // DTO létrehozása a táblázathoz
+            ProductDto dto = new ProductDto();
+            dto.setAruKod(aru.getAruKod());
+            dto.setNev(aru.getNev());
+            dto.setEgyseg(aru.getEgyseg());
+            dto.setAr(aru.getAr());
 
-            // Null-biztos hozzáadás (COALESCE logika)
-            revenues.add(osszeg != null ? osszeg : BigDecimal.ZERO);
+            String katNev = (aru.getKategoria() != null) ? aru.getKategoria().getKatNev() : null;
+            dto.setKatNev(katNev);
+            dto.setProductPic(categoryImages.getOrDefault(katNev, "images/product-thumbnail-4.jpg"));
+
+            BigDecimal mennyiseg = BigDecimal.ZERO;
+            BigDecimal osszeg = BigDecimal.ZERO;
+
+            if (aru.getEladas() != null && aru.getEladas().getMennyiseg() != null) {
+                mennyiseg = aru.getEladas().getMennyiseg();
+                osszeg = mennyiseg.multiply(aru.getAr());
+            }
+            dto.setMennyiseg(mennyiseg);
+            dto.setOsszeg(osszeg);
+
+            products.add(dto);
+
+            // Chart adatok
+            labels.add(aru.getNev());
+            revenues.add(osszeg);
         }
 
-        // 3. JSON GENERÁLÁS (PHP json_encode helyett)
+        // JSON GENERÁLÁS (PHP json_encode helyett)
         Map<String, Object> payloadMap = new HashMap<>();
         payloadMap.put("labels", labels);
         payloadMap.put("revenues", revenues);
@@ -59,14 +83,10 @@ public class DiagramController {
             e.printStackTrace();
         }
 
-        // 4. ADATÁTADÁS A NÉZETNEK
-        // model.addAttribute("title", title);
-        model.addAttribute("products", products);           // A táblázatnak
+        // ADATÁTADÁS A NÉZETNEK
+        model.addAttribute("products", products); // A táblázatnak
         model.addAttribute("diagramPayload", diagramPayload); // A grafikonnak
-
-        // FONTOS: A "turpisság" - ez alapján dönti el a közös template, hogy mit mutasson
         model.addAttribute("activePage", "/diagram");
-
         return "diagram";
     }
 
