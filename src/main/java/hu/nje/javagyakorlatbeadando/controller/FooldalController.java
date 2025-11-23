@@ -1,7 +1,7 @@
 package hu.nje.javagyakorlatbeadando.controller;
 
 import hu.nje.javagyakorlatbeadando.dto.KapcsolatDto;
-import hu.nje.javagyakorlatbeadando.dto.ProductDTO;
+import hu.nje.javagyakorlatbeadando.dto.ProductDto;
 import hu.nje.javagyakorlatbeadando.entity.Aru;
 import hu.nje.javagyakorlatbeadando.repository.AruRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class FooldalController {
 
         // Ár szerinti növekvő rendezés (legolcsóbb elöl)
         List<Aru> aruList = aruRepository.findTop10ByOrderByArAsc();
-        List<ProductDTO> products = new ArrayList<>();
+        List<ProductDto> products = new ArrayList<>();
 
         Map<String, String> categoryImages = new HashMap<>();
         categoryImages.put("Húsáru", "images/product-thumb-6.png");
@@ -37,7 +37,7 @@ public class FooldalController {
         categoryImages.put("Üditőitalok", "images/product-thumb-30.png");
 
         for (Aru aru : aruList) {
-            ProductDTO dto = new ProductDTO();
+            ProductDto dto = new ProductDto();
             dto.setAruKod(aru.getAruKod());
             dto.setNev(aru.getNev());
             dto.setAr(aru.getAr());

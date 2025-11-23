@@ -12,10 +12,10 @@
     <script type="module" th:src="@{/assets/main-1.0.0.js}"></script>
 </head>
 <body>
-<th:block th:replace="~{fragments/header :: header}"></th:block>
-<main>
-    <div layout:fragment="content"></div><!-- Alapértelmezett tartalom, ha nincs felüldefiniálva -->
-</main>
-<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
+    <main>
+        <div layout:fragment="content"></div><!-- Alapértelmezett tartalom, ha nincs felüldefiniálva -->
+    </main>
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>

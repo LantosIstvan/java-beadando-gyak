@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -28,12 +27,15 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        //http.csrf(csrf -> csrf.disable())
         http
             .authorizeHttpRequests(
                 auth -> auth
-                    .requestMatchers("/", "/login", "/register", "/fooldal", "/kapcsolat", "/adatbazis", "/css/**", "/js/**", "/assets/**", "/images/**").permitAll()
+                    // Csak be nem jelentkezett felhasználók érhetik el a login és register oldalakat
+                    .requestMatchers("/login", "/register").anonymous()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .anyRequest().authenticated()
+                    .requestMatchers("/").authenticated()
+                    .anyRequest().permitAll() // Alap esetben engedélyezünk mindent, majd később korlátozunk
             )
             .formLogin(
                 form -> form
@@ -42,7 +44,7 @@ public class WebSecurityConfig {
                     .permitAll()
             ).logout(
                 logout -> logout
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutUrl("/logout")
                     .logoutSuccessUrl("/")
                     .permitAll()
             );

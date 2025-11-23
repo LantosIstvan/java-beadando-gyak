@@ -12,17 +12,14 @@ import java.util.List;
 public interface AruRepository extends JpaRepository<Aru, Long> {
     List<Aru> findAllByOrderByAruKodAsc();
 
-
-//      Lekéri az első 10 árut ár szerint növekvő sorrendben (legolcsóbb elöl).
-
+    /**
+     * Lekéri az első 10 árut ár szerint növekvő sorrendben (legolcsóbb elöl).
+     */
     List<Aru> findTop10ByOrderByArAsc();
 
-    // AruRepository.java
     @Query("SELECT a FROM Aru a " +
         "LEFT JOIN FETCH a.eladas e " +
         "LEFT JOIN FETCH a.kategoria k " +
         "ORDER BY e.mennyiseg DESC NULLS LAST")
     List<Aru> findTopByQuantity(Pageable pageable);
 }
-
-

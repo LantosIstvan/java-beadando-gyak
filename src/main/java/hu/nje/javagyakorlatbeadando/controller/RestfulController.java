@@ -9,13 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/aruk")
-public class ApiAruController {
+@RequestMapping("/restful")
+public class RestfulController {
 
     @Autowired
     private AruRepository aruRepository;
@@ -69,4 +68,5 @@ public class ApiAruController {
         }
         return ResponseEntity.notFound().build();
     }
+
 }

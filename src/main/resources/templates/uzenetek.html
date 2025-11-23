@@ -9,14 +9,12 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <th:block th:replace="~{fragments/banner :: banner(title=${pageTitle})}"></th:block>
 
+    <th:block th:replace="~{fragments/banner :: banner(title=${pageTitle})}"></th:block>
 
     <section class="my-5">
         <div class="container-lg">
             <div class="row">
-                <!-- TODO: Pagináció implementálása -->
-
                 <div class="col-12">
                     <div class="table-responsive mt-3">
                         <table class="table table-striped table-hover align-middle">
@@ -60,11 +58,10 @@
                         </table>
                     </div>
                 </div>
-
-                <!-- TODO: Pagináció implementálása -->
             </div>
         </div>
     </section>
+
 </div>
 </body>
 </html>

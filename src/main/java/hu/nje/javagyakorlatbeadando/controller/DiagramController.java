@@ -23,7 +23,7 @@ public class DiagramController {
 
     @GetMapping("/diagram")
     public String index(Model model) {
-        String title = "Diagram menü";
+        // String title = "Diagram menü";
 
         // 1. LEKÉRDEZÉS
         // PHP: ->orderByDesc('qty')->limit(5)
@@ -60,7 +60,7 @@ public class DiagramController {
         }
 
         // 4. ADATÁTADÁS A NÉZETNEK
-        model.addAttribute("title", title);
+        // model.addAttribute("title", title);
         model.addAttribute("products", products);           // A táblázatnak
         model.addAttribute("diagramPayload", diagramPayload); // A grafikonnak
 
@@ -69,4 +69,5 @@ public class DiagramController {
 
         return "diagram";
     }
+
 }

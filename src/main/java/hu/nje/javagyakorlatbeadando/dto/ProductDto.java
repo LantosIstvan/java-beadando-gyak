@@ -2,7 +2,7 @@ package hu.nje.javagyakorlatbeadando.dto;
 
 import java.math.BigDecimal;
 
-public class ProductDTO {
+public class ProductDto {
     private Long aruKod;
     private String nev;
     private String katNev;

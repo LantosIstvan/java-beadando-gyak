@@ -6,11 +6,9 @@
     <title>Diagram</title>
 </head>
 <body>
-
 <div layout:fragment="content">
-    <!-- Banner -->
-    <div th:replace="~{fragments/banner :: banner(title=${title})}"></div>
 
+    <div th:replace="~{fragments/banner :: banner(title=${title})}"></div>
 
     <script id="diagram-payload" type="application/json" th:utext="${diagramPayload}"></script>
 
@@ -25,7 +23,6 @@
                                 <h2 class="h5 m-0">Legnagyobb bevételt hozó termékek</h2>
                             </div>
                             <div style="height: 360px">
-
                                 <canvas id="revenueChart"></canvas>
                             </div>
                         </div>
@@ -66,7 +63,6 @@
             </div>
         </div>
     </section>
-
 
 </div>
 </body>
