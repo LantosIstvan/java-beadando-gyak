@@ -1,6 +1,6 @@
 package hu.nje.javagyakorlatbeadando.controller;
 
-import hu.nje.javagyakorlatbeadando.dto.ProductDTO;
+import hu.nje.javagyakorlatbeadando.dto.ProductDto;
 import hu.nje.javagyakorlatbeadando.entity.Aru;
 import hu.nje.javagyakorlatbeadando.repository.AruRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class AdatbazisController {
 
     @GetMapping("/adatbazis")
     public String listProducts(Model model) {
-        List<Aru> aruList = aruRepository.findAll(Sort.by(Sort.Direction.ASC, "aruKod"));
-        List<ProductDTO> products = new ArrayList<>();
+        List<Aru> aruList = aruRepository.findAll(Sort.by(Sort.Direction.ASC, "nev"));
+        List<ProductDto> products = new ArrayList<>();
 
         Map<String, String> categoryImages = new HashMap<>();
         categoryImages.put("Húsáru", "images/product-thumb-6.png");
@@ -34,7 +34,7 @@ public class AdatbazisController {
         categoryImages.put("Üditőitalok", "images/product-thumb-30.png");
 
         for (Aru aru : aruList) {
-            ProductDTO dto = new ProductDTO();
+            ProductDto dto = new ProductDto();
             dto.setAruKod(aru.getAruKod());
             dto.setNev(aru.getNev());
             dto.setEgyseg(aru.getEgyseg());

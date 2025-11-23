@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
+@EnableMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class WebSecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -34,7 +34,7 @@ public class WebSecurityConfig {
                     // Csak be nem jelentkezett felhasználók érhetik el a login és register oldalakat
                     .requestMatchers("/login", "/register").anonymous()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/").authenticated()
+                    .requestMatchers("/uzenetek").authenticated()
                     .anyRequest().permitAll() // Alap esetben engedélyezünk mindent, majd később korlátozunk
             )
             .formLogin(
@@ -47,6 +47,11 @@ public class WebSecurityConfig {
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/")
                     .permitAll()
+            )
+            .exceptionHandling(exception -> exception
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.sendRedirect("/");
+                })
             );
         return http.build();
     }

@@ -50,8 +50,6 @@ public class Aru {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-
-
     public Long getAruKod() { return aruKod; }
     public void setAruKod(Long aruKod) { this.aruKod = aruKod; }
 
