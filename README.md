@@ -76,6 +76,14 @@ Adatbázis menedzseléshez PHPMyAdmin mellett javasolt még a [DBeaver](https://
 
 ## Git workflow
 
+Aktuális branch ellenőrzése:
+
+```sh
+git rev-parse --abbrev-ref HEAD
+# vagy 2.22 verziótól kezdve
+git branch --show-current
+```
+
 Minden kollaborátor számára a fejlesztés javasolt saját névreszóló branch-ben, majd a kód átemelése master-be.
 
 ```sh
