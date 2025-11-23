@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default_layout}"> <!-- 1. Ez hivatkozik a te létező layoutodra -->
+      layout:decorate="~{layouts/default_layout}">
 <head>
     <title>Diagram</title>
 </head>
@@ -11,7 +11,7 @@
     <!-- Banner -->
     <div th:replace="~{fragments/banner :: banner(title=${title})}"></div>
 
-    <!-- JSON Payload -->
+
     <script id="diagram-payload" type="application/json" th:utext="${diagramPayload}"></script>
 
     <!-- Chart.js Szekció -->
@@ -25,6 +25,7 @@
                                 <h2 class="h5 m-0">Legnagyobb bevételt hozó termékek</h2>
                             </div>
                             <div style="height: 360px">
+
                                 <canvas id="revenueChart"></canvas>
                             </div>
                         </div>
@@ -54,7 +55,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <!-- 4. Sorok: A te fragments/table_row.html fájlodat hívjuk -->
+                            <!-- Sorok: fragments/table_row.html hívása -->
                             <th:block th:each="aru : ${products}">
                                 <tr th:replace="~{fragments/table_row :: row(${aru})}"></tr>
                             </th:block>
@@ -66,25 +67,6 @@
         </div>
     </section>
 
-    <!-- Script -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const payloadEl = document.getElementById('diagram-payload');
-            if (payloadEl) {
-                const data = JSON.parse(payloadEl.textContent);
-                const ctx = document.getElementById('revenueChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: { y: { beginAtZero: true } }
-                    }
-                });
-            }
-        });
-    </script>
 
 </div>
 </body>
