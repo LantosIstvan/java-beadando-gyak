@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
     List<Message> findByUserEmail(String email);
+
+    List<Message> findAllByOrderByIdDesc();
+
+    List<Message> findByUserEmailOrderByIdDesc(String email);
 }

@@ -21,12 +21,12 @@
                 <!-- BEJELENTKEZVE: Automatikus kitöltés + letiltva -->
                 <div sec:authorize="isAuthenticated()">
                     <!-- Hidden input a kötéshez (hogy elküldje az értéket) -->
-                    <input type="hidden" name="name" th:value="${#authentication.principal.username}">
+                    <input type="hidden" name="name" th:value="${#authentication.principal.fullName}">
                     <!-- Megjelenített disabled input -->
                     <input type="text"
                            class="form-control border border-secondary rounded ps-2 py-2 me-3"
                            placeholder="Név*"
-                           th:value="${#authentication.principal.username}"
+                           th:value="${#authentication.principal.fullName}"
                            disabled>
                 </div>
                 <!-- VENDÉG: Szerkeszthető mező -->

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default_layout}">
+      layout:decorate="~{layouts/default_layout}"
+      th:with="pageTitle='Diagram'">
 <head>
-    <title>Diagram</title>
+    <title th:text="${pageTitle}"></title>
 </head>
 <body>
 <div layout:fragment="content">
 
-    <div th:replace="~{fragments/banner :: banner(title=${title})}"></div>
+    <th:block th:replace="~{fragments/banner :: banner(title=${pageTitle})}"></th:block>
 
     <script id="diagram-payload" type="application/json" th:utext="${diagramPayload}"></script>
 
