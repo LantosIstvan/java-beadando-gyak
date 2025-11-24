@@ -3,9 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default_layout}">
+      layout:decorate="~{layouts/default_layout}"
+      th:with="pageTitle='Üzenetek'">
 <head>
-    <title>Beérkezett üzenetek</title>
+    <title th:text="${pageTitle}"></title>
 </head>
 <body>
 <div layout:fragment="content">

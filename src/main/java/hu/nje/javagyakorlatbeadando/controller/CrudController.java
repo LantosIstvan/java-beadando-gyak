@@ -67,21 +67,15 @@ public class CrudController {
     }
 
     @PostMapping("/crud/create")
-    public String createProduct(
-        @RequestParam String nev,
-        @RequestParam Long kat_kod,
-        @RequestParam String egyseg,
-        @RequestParam BigDecimal ar,
-        RedirectAttributes redirectAttributes
-    ) {
+    public String createProduct(@ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
         try {
             Aru aru = new Aru();
-            aru.setNev(nev);
-            aru.setEgyseg(egyseg);
-            aru.setAr(ar);
+            aru.setNev(productDto.getNev());
+            aru.setEgyseg(productDto.getEgyseg());
+            aru.setAr(productDto.getAr());
 
             Kategoria kategoria = new Kategoria();
-            kategoria.setKatKod(kat_kod);
+            kategoria.setKatKod(productDto.getKatKod());
             aru.setKategoria(kategoria);
 
             aruRepository.save(aru);
@@ -94,25 +88,18 @@ public class CrudController {
     }
 
     @PostMapping("/crud/update")
-    public String updateProduct(
-        @RequestParam Long aruKod,
-        @RequestParam String nev,
-        @RequestParam Long kat_kod,
-        @RequestParam String egyseg,
-        @RequestParam BigDecimal ar,
-        RedirectAttributes redirectAttributes
-    ) {
+    public String updateProduct(@ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
         try {
-            Aru aru = aruRepository.findById(aruKod)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + aruKod));
+            Aru aru = aruRepository.findById(productDto.getAruKod())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + productDto.getAruKod()));
 
-            aru.setNev(nev);
-            aru.setEgyseg(egyseg);
-            aru.setAr(ar);
+            aru.setNev(productDto.getNev());
+            aru.setEgyseg(productDto.getEgyseg());
+            aru.setAr(productDto.getAr());
 
-            if (aru.getKategoria() == null || !aru.getKategoria().getKatKod().equals(kat_kod)) {
+            if (aru.getKategoria() == null || !aru.getKategoria().getKatKod().equals(productDto.getKatKod())) {
                 Kategoria kategoria = new Kategoria();
-                kategoria.setKatKod(kat_kod);
+                kategoria.setKatKod(productDto.getKatKod());
                 aru.setKategoria(kategoria);
             }
 
@@ -121,7 +108,7 @@ public class CrudController {
             return "redirect:/crud";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error_msg", "Hiba történt a frissítés során: " + e.getMessage());
-            return "redirect:/crud/edit/" + aruKod;
+            return "redirect:/crud/edit/" + productDto.getAruKod();
         }
     }
 

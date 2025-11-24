@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class ProductDto {
     private Long aruKod;
     private String nev;
+    private Long katKod; // Új mező a form kötéshez
     private String katNev;
     private String egyseg;
     private BigDecimal ar;
@@ -17,6 +18,9 @@ public class ProductDto {
 
     public String getNev() { return nev; }
     public void setNev(String nev) { this.nev = nev; }
+
+    public Long getKatKod() { return katKod; }
+    public void setKatKod(Long katKod) { this.katKod = katKod; }
 
     public String getKatNev() { return katNev; }
     public void setKatNev(String katNev) { this.katNev = katNev; }

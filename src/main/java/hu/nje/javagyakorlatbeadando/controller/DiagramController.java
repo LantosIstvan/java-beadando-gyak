@@ -41,8 +41,7 @@ public class DiagramController {
         categoryImages.put("Üditőitalok", "images/product-thumb-30.png");
 
         for (Aru aru : aruList) {
-            // DTO létrehozása a táblázathoz
-            ProductDto dto = new ProductDto();
+            ProductDto dto = new ProductDto(); // DTO létrehozása a táblázathoz
             dto.setAruKod(aru.getAruKod());
             dto.setNev(aru.getNev());
             dto.setEgyseg(aru.getEgyseg());
