@@ -1,5 +1,6 @@
 package hu.nje.javagyakorlatbeadando.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,6 +25,7 @@ public class Eladas {
             foreignKeyDefinition = "FOREIGN KEY (aru_kod) REFERENCES ARU(aru_kod) ON UPDATE CASCADE ON DELETE CASCADE"
         )
     )
+    @JsonIgnore
     private Aru aru;
 
     @Column(nullable = false, columnDefinition = "DECIMAL(10,2) UNSIGNED")

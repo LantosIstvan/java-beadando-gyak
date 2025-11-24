@@ -29,12 +29,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //http.csrf(csrf -> csrf.disable())
         http
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/restful/**"))
             .authorizeHttpRequests(
                 auth -> auth
                     // Csak be nem jelentkezett felhasználók érhetik el a login és register oldalakat
                     .requestMatchers("/login", "/register").anonymous()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     .requestMatchers("/uzenetek").authenticated()
+                    .requestMatchers("/restful/**").permitAll()
                     .anyRequest().permitAll() // Alap esetben engedélyezünk mindent, majd később korlátozunk
             )
             .formLogin(
