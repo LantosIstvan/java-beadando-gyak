@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <th:block th:replace="~{fragments/banner :: banner(title=${pageTitle})}"></th:block>
+
+    <section class="my-5 py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-10 mx-auto">
+
+                    <div th:if="${success_msg}" class="alert alert-success" th:text="${success_msg}"></div>
+                    <div th:if="${error_msg}" class="alert alert-danger" th:text="${error_msg}"></div>
+
+                    <form th:action="${product.aruKod != null} ? @{/crud/update} : @{/crud/create}" method="POST" class="card p-4">
+
+                        <input type="hidden" name="aruKod" th:value="${product.aruKod}" th:if="${product.aruKod != null}">
+
+                        <div class="mb-3">
+                            <label class="form-label">Árukód</label>
+                            <input th:if="${product.aruKod != null}" type="text" class="form-control border border-secondary rounded ps-2 py-2 me-3" th:value="${product.aruKod}" disabled readonly>
+                            <div th:if="${product.aruKod == null}" class="form-text">Az árukód automatikusan kerül kiosztásra létrehozáskor.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Név</label>
+                            <input type="text" name="nev" th:value="${product.nev}" class="form-control border border-secondary rounded ps-2 py-2 me-3" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Kategória (kat_kod)</label>
+                            <input type="number" name="kat_kod" th:value="${product.kategoria?.katKod}" class="form-control border border-secondary rounded ps-2 py-2 me-3" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mértékegység</label>
+                            <select name="egyseg" class="form-select border border-secondary rounded ps-2 py-2 me-3" required>
+                                <option value="" disabled th:selected="${product.egyseg == null}">Válasszon...</option>
+                                <option value="darab" th:selected="${product.egyseg == 'darab'}">darab</option>
+                                <option value="doboz" th:selected="${product.egyseg == 'doboz'}">doboz</option>
+                                <option value="kg" th:selected="${product.egyseg == 'kg'}">kg</option>
+                                <option value="liter" th:selected="${product.egyseg == 'liter'}">liter</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Egységár (Ft)</label>
+                            <input type="number" name="ar" th:value="${product.ar}" class="form-control border border-secondary rounded ps-2 py-2 me-3" step="0.01" required>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <a th:href="@{/crud}" class="btn btn-secondary">Vissza</a>
+                            <button class="btn btn-primary" th:text="${product.aruKod != null ? 'Frissítés' : 'Mentés'}">Mentés</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

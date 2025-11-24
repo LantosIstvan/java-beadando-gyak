@@ -8,7 +8,7 @@
                 <th scope="col">Árukód</th>
                 <th scope="col" th:if="${activePage != '/crud'}">Termékfotó</th>
                 <th scope="col">Név</th>
-                <th scope="col" th:if="${activePage == '/adatbazis'}">Kategória</th>
+                <th scope="col" th:if="${activePage != '/diagram'}">Kategória</th>
                 <th scope="col">Mértékegység</th>
                 <th scope="col" th:if="${activePage == '/adatbazis'}">Mennyiség</th>
                 <th scope="col">Egységár</th>
@@ -28,7 +28,7 @@
                     >
                 </td>
                 <td th:text="${product.nev}"></td>
-                <td th:if="${activePage == '/adatbazis'}" th:text="${product.katNev != null ? product.katNev : '—'}"></td>
+                <td th:if="${activePage != '/diagram'}" th:text="${product.katNev != null ? product.katNev : '—'}"></td>
                 <td th:text="${product.egyseg}"></td>
                 <td th:if="${activePage == '/adatbazis'}">
                     <span th:if="${product.mennyiseg != null}" th:text="${#numbers.formatDecimal(product.mennyiseg, 0, 'DEFAULT', 0, 'DEFAULT')}"></span>
